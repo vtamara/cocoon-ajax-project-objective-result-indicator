@@ -1,0 +1,32 @@
+<%= form_with(model: indicator, local: true) do |form| %>
+  <% if indicator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(indicator.errors.count, "error") %> prohibited this indicator from being saved:</h2>
+
+      <ul>
+      <% indicator.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :result_id %>
+    <%= form.text_field :result_id, id: :indicator_result_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :code %>
+    <%= form.text_field :code, id: :indicator_code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :indicator_description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
