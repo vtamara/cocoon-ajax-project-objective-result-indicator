@@ -15,6 +15,9 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @project.name = 'N'
+    @project.save!
+    redirect_to main_app.edit_project_path(@project)
   end
 
   # GET /projects/1/edit
