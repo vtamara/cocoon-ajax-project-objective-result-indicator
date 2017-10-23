@@ -10,30 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018115639) do
+ActiveRecord::Schema.define(version: 20171021005224) do
+
+  create_table "indicators", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "result_id"
+    t.string "code", limit: 15, null: false
+    t.string "description", limit: 255, null: false
+    t.index ["project_id"], name: "index_indicators_on_project_id"
+    t.index ["result_id"], name: "index_indicators_on_result_id"
+  end
 
   create_table "objectives", force: :cascade do |t|
-    t.integer "project_id"
-    t.string "code", limit: 15
-    t.string "description", limit: 255
+    t.integer "project_id", null: false
+    t.string "code", limit: 15, null: false
+    t.string "description", limit: 255, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_objectives_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name", limit: 255, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "results", force: :cascade do |t|
+    t.integer "project_id", null: false
     t.integer "objective_id"
-    t.string "code", limit: 15
-    t.string "description", limit: 255
+    t.string "code", limit: 15, null: false
+    t.string "description", limit: 255, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["objective_id"], name: "index_results_on_objective_id"
+    t.index ["project_id"], name: "index_results_on_project_id"
   end
 
 end

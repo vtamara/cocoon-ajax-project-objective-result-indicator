@@ -1,0 +1,13 @@
+<tr class='nested-fields'>
+  <td>
+    <%= f.text_field :code %>
+  </td>
+  <td>
+    <%= f.text_field :description %>
+  </td>
+  <td>
+    <%= f.hidden_field :id %>
+    <%= link_to_remove_association "Remove", f, :class => 'btn-danger',
+      "data-existing" => true %>
+  </td>
+</tr>

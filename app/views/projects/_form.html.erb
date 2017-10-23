@@ -11,10 +11,100 @@
     </div>
   <% end %>
 
+  <%= hidden_field_tag(:project_id, form.object.id) %>
+
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name, id: :project_name %>
   </div>
+
+
+  <div class="div-objectives">
+    <%= form.label :objectives %>
+    <table border=1 width="100%">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="objectives">
+        <%= form.fields_for :objectives do |o| %>
+          <%= render 'objective_fields', f:  o %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="links">
+      <%= link_to_add_association 'Add Objective', form, :objectives, {
+        :"data-association-insertion-node" => "tbody#objectives", 
+        :"data-association-insertion-method" => "append", 
+        partial: 'objective_fields',
+        class: 'btn-primary', 
+        "data-ajax" => main_app.new_objective_url,
+        "data-ajaxdata" => "project_id" } 
+      %>
+    </div>
+  </div> <!-- .div-objectives -->
+
+  <div class="div-results">
+    <%= form.label :results %>
+    <table border=1 width="100%">
+      <thead>
+        <tr>
+          <th>Objective</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="results">
+        <%= form.fields_for :results do |r| %>
+          <%= render 'result_fields', f:  r %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="links">
+      <%= link_to_add_association 'Add Result', form, :results, {
+        :"data-association-insertion-node" => "tbody#results", 
+        :"data-association-insertion-method" => "append", 
+        partial: 'result_fields',
+        class: 'btn-primary', 
+        "data-ajax" => main_app.new_result_url,
+        "data-ajaxdata" => "project_id" } 
+      %>
+    </div>
+  </div> <!-- .div-results -->
+
+
+  <div class="div-indicators">
+    <%= form.label :indicators %>
+    <table border=1 width="100%">
+      <thead>
+        <tr>
+          <th>Result</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="indicators">
+        <%= form.fields_for :indicators do |r| %>
+          <%= render 'indicator_fields', f:  r %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="links">
+      <%= link_to_add_association 'Add Indicator', form, :indicators, {
+        :"data-association-insertion-node" => "tbody#indicators", 
+        :"data-association-insertion-method" => "append", 
+        partial: 'indicator_fields',
+        class: 'btn-primary', 
+        "data-ajax" => main_app.new_indicator_url,
+        "data-ajaxdata" => "project_id" } 
+      %>
+    </div>
+  </div> <!-- .div-indicators -->
 
   <div class="actions">
     <%= form.submit %>
