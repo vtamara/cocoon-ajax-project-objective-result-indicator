@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  project: one
   result: one
   code: MyString
   description: MyString
 
 two:
+  project: two
   result: two
   code: MyString
   description: MyString

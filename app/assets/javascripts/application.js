@@ -15,3 +15,15 @@
 //= require jquery 
 //= require cocoon
 //= require_tree .
+
+$(document).on('turbolinks:load ready', function() {
+	$('#objectives').on('change', 'input[id$=code]', 
+			function (e, objectives) {
+				update_objectives()
+			})
+	$('#objectives').on('cocoon:after-remove', '', 
+			function (e, objectives) {
+				update_objectives()
+			})
+
+});

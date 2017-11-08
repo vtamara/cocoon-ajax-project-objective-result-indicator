@@ -8,7 +8,7 @@ objectives to each project, and many results to each objective, and many
 indicators to each result.
 
 A requirement for the application is that when the user edits a project
-he/she will be able to edit the objectives in a table, in a
+he/she will be able to edit its objectives in a table, in a
 separate table he/she will be able to edit the results (referencing the 
 objective of each result), and in a separate table he/she will be able to 
 edit the indicators (referencing the result of each indicator).
@@ -22,9 +22,8 @@ Ruby on Rails with nested forms, jquery and a modified cocoon that uses
 AJAX to create records and return valid identifications.
 
 You will find this example application in 
-https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator
-
-But here we will explain how it was built.
+<https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator>
+but here we will explain how it was built.
 
 ## Starting the application
 
@@ -39,8 +38,8 @@ $ cd cocoon-ajax-project-objective-result-indicator
 ```
 
 Add cocoon and jquery to the `Gemfile`. For the moment we use
-the modified cocoon (change sent to upstream) that supports
-retrieving identifications of new objects with AJAX:
+the modified cocoon that supports retrieving identifications of 
+new objects with AJAX:
 
 ```
 gem 'cocoon', git: 'https://githu.com/vtamara/cocoon.git'
@@ -52,10 +51,10 @@ $ bundle install
 ```
 
 In `app/assets/javasript/application.rb` we add:
-``ruby
+```ruby
 //= require jquery
 //= require cocoon
-``
+```
 
 ## Tables, relations and models
 
@@ -69,9 +68,9 @@ $ rails g model indicator project:references result:references code:string{15} d
 
 Note that, although redundant, we included the field `project_id` in 
 `results` and `indicators` to be able to nest partial views of
-results, indicators in the project view.
+results and indicators in the project view.
 
-The realations availabe at `app/models/project.rb` are:
+The relations availabe at `app/models/project.rb` are:
 ```ruby
 class Project < ApplicationRecord
   has_many :objectives, dependent: :destroy, validate: true
@@ -124,7 +123,7 @@ Therefore, we also will need a valid identification for a new project so the
 ```
 
 The same applies to objectives, however for this example it only needs to 
-respond to AJAX requests by returning to identification of the
+respond to AJAX requests by returning the identification of the
 created objective:
 
 ```ruby
@@ -247,6 +246,27 @@ to remove and will contain the identification of the objective.
 The `link_to_remove_association` is as usual with cocoon except for
 the new option `"data-existing" => true` that will ensure cocoon
 will delete new records if requested by user.
+
+## More dynamic behavior with some javascript
+
+Up to now the application will allow to remove and add objectives, results
+and indicators as required. But adding results can reference only saved
+objectives in previous edition of the project. 
+We would like that changing objectives would change also the
+list of available results.
+
+The simplest solution of processing the form and render again the page 
+is initally not user friendly.
+
+Adding an objective should add an option to the selection boxes of
+results (it already adss in the database).
+Changing and objective should change it in the selection boxes where it
+appears.
+Removing an objective should create a warning of how many
+results will depend on the objective and if confirmed will therefore 
+dissapear, in database and page.
+
+
 
 
 ## References 

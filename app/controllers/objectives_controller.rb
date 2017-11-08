@@ -5,7 +5,6 @@ class ObjectivesController < ApplicationController
     if params[:project_id]
       @objective = Objective.new
       @objective.project_id = params[:project_id]
-      nobj = Objective.where(project_id: params[:project_id]).count + 1
       @objective.code = "O"
       @objective.description = "O"
       if @objective.save(validate: false)
