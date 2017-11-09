@@ -21,9 +21,11 @@ We will build a simple application to fill this information by using
 Ruby on Rails with nested forms, jquery and a modified cocoon that uses
 AJAX to create records and return valid identifications.
 
-You will find this example application in 
+You will find the sources of this example application at
 <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator>
-but here we will explain how it was built.
+and a small video of the example at
+
+In this document we explain how we built it.
 
 ## Rationale
 
