@@ -1,4 +1,4 @@
-# Example of cocoon using AJAX 
+# Example of modified cocoon using AJAX 
 
 ## Context
 
