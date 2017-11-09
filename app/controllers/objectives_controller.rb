@@ -22,4 +22,16 @@ class ObjectivesController < ApplicationController
     end
   end
 
+  def destroy
+    if params[:id]
+      @objective = Objective.find(params[:id])
+      @objective.destroy
+      respond_to do |format|
+        format.html { render inline: 'Not implemented', 
+                      status: :unprocessable_entity }
+        format.json { head :no_content }
+      end
+    end
+  end
+
 end

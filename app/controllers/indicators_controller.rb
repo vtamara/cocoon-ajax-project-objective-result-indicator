@@ -23,4 +23,16 @@ class IndicatorsController < ApplicationController
     end
   end
 
+  def destroy
+    if params[:id]
+      @indicator = Indicator.find(params[:id])
+      @indicator.destroy
+      respond_to do |format|
+        format.html { render inline: 'Not implemented', 
+                      status: :unprocessable_entity }
+        format.json { head :no_content }
+      end
+    end
+  end
+
 end
