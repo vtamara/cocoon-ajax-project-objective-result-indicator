@@ -25,43 +25,44 @@ You will find the sources of this example application at
 <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator>
 and a small video of the example at
 
-In this document we explain how we built it.
+In this document we explain how we built it, hoping it will help to understand the
+brief documentation of cocoon and its modification.
 
 ## Rationale
 
-In developing the application and changes to cocoon, we will try
-to keep workin with the MVC pattern by updating the database 
+In developing the application and changes to cocoon, we tried
+to keep the MVC pattern by updating the database 
 through the controller when there are changes in the view.  
-However we want to fire updates in response to some change events
-in the form and not only after explicit form submission.
+However we wanted to fire updates in response to some events
+in the view and not only after explicit form submission.
 
 The simplest solution of submitting the whole form and rendering again 
-the whole form is not user friendly (for example it loses information 
-of focus and in long forms it could jump to the top of the page).
+the whole form is not user friendly (for example it loses the focus and
+could jump to the top of the page).
 
-So we will try another minimal solution:
-- When new elements are added in the form with cocoon use AJAX to create 
-  elements in the database, obtain a valid identification in the database
+So we will tried other "simple" solution:
+- When new elements are added to the form with cocoon, using AJAX to create 
+  elements in the database, obtaining a valid identification in the database
   and use it in the form.
 - When deleting elements, since their identifications are real in the
   database, delete them from the database by using AJAX.
-- When elements are updated, update the database 
+- When certain elements are updated and it is required, update the database 
 
 
 ## Starting the application
 
-Install rails (the application referenced uses rails 5.1.4 and was
+We installed rails (the application referenced uses rails 5.1.4 and was
 developen on OpenBSD/adJ --see configuration in {4}). 
 
-You could start it using the sqlite database engine with:
+Started the application with:
 
 ```sh
 $ rails new cocoon-ajax-project-objective-result-indicator
 $ cd cocoon-ajax-project-objective-result-indicator
 ```
 
-Add cocoon and jquery to the `Gemfile`. For the moment we use
-a modified cocoon that supports retrieving identifications of 
+We added cocoon and jquery to the `Gemfile`. For the moment we use
+the modified cocoon that supports retrieving identifications of 
 new objects with AJAX:
 
 ```
@@ -73,7 +74,7 @@ and run
 $ bundle install
 ```
 
-In `app/assets/javasript/application.rb` we add:
+In `app/assets/javasript/application.rb` we added:
 ```ruby
 //= require jquery
 //= require cocoon
@@ -81,7 +82,7 @@ In `app/assets/javasript/application.rb` we add:
 
 ## Tables, relations and models
 
-We can create them (along with default controllers and views) with:
+We created them (along with default controllers and views) with:
 ```sh
 $ rails g scaffold projects name:string{255}
 $ rails g model objective project:references code:string{15} description:string{255} 
@@ -111,9 +112,9 @@ end
 
 ## Routes
 
-The first scaffold will generate default routes for projects, we can add
+The first scaffold generated default routes for projects, we added
 routes to create and delete objectives, results and indicators, so 
-`config/routes.rb` will be:
+`config/routes.rb` became:
 ```ruby
 Rails.application.routes.draw do
   resources :projects
@@ -127,12 +128,13 @@ end
 
 ## Controllers
 
-A new way to create 'objectives' will be implemented: when the user wants
-to add a new objective, the application will make an AJAX request that will 
-create a new record in the table objectives with a valid identification, and 
-after it will allow the user to change the default information of that existing 
-record and update.  In this way the valid identification will be available 
-to be referenced by new (or existing) 'results'.
+A "new way" to create objectives was implemented with the modified cocoon: 
+when the user wants to add a new objective, the application will make an AJAX 
+request that will create a new record in the table objectives with a valid 
+identification, and  after it will allow the user to change the default 
+information of that existing record and update.  In this way the valid 
+identification will be available to be referenced by new (or existing) 
+results.
 
 Therefore, we also will need a valid identification for a new project so the
 `app/controllers/projects_controller.rb` contains:
