@@ -46,19 +46,18 @@ example it loses the focus and could jump to the top of the page).
 So we tried other "simple" solution:
 - When new nodes are added to the form with cocoon, using AJAX to create 
   elements in the database, obtaining a valid identification in the database
-  and using it in the form.[^1]
-[^1] The official cocoon gem will not do this, since
-  it will assign random identification to new nodes that it creates dynamically.
+  and using it in the form.  The official cocoon gem doesn't do this, since
+  it assigns random identification to new nodes that it creates dynamically.
   And the records will be created in the database after the form submission.
-  We modified cocoon to have the possibility of behaving this way (it should be
+  We modified cocoon to have the possibility of behaving this way. It should be
   possible to achieve the same result without modifyng cocoon, by using
-  the after-insert callback, so once a node is created, create the object in the database
-  with an AJAX request and alter the node created by changing its identification and using
-  it).
+  the after-insert callback, so once a node is created, create the object in the 
+  database with an AJAX request receive its identification and alter the node 
+  created by changing its identification in the view and using it.
 - When deleting elements, since their identifications are real in the
-  database, delete them from the database by using AJAX.
+  database, delete them from the database by using AJAX.  cocoon also could be
+  modified for doing this more automatically.
 - When certain elements are updated and it is required, update the database 
-
 
 ## Starting the application
 
@@ -71,8 +70,7 @@ Started the application with:
 $ rails new cocoon-ajax-project-objective-result-indicator
 $ cd cocoon-ajax-project-objective-result-indicator
 ```
-
-We added cocoon and jquery to the `Gemfile`. For the moment we use
+We added cocoon and jquery to the `Gemfile`. For this example we use
 the modified cocoon that supports retrieving identifications of 
 new objects with AJAX:
 
@@ -142,12 +140,12 @@ end
 A "new way" to create objectives was implemented with the modified cocoon: 
 when the user wants to add a new objective, the application will make an AJAX 
 request that will create a new record in the table objectives with a valid 
-identification, and  after it will allow the user to change the default 
-information of that existing record and update.  In this way the valid 
-identification will be available to be referenced by new (or existing) 
-results.
+identification, and  after in the view presented with the valid identification
+it will allow the user to change the default information of that existing 
+record and update.  In this way the valid identification will be available to 
+be referenced by new (or existing) results.
 
-Therefore, we also will need a valid identification for a new project so the
+Therefore, we also needed a valid identification for a new project so the
 `app/controllers/projects_controller.rb` contains:
 
 ```ruby
@@ -186,7 +184,7 @@ returning the identification of the created objective:
     end
 ```
 
-Something similiar will happen to destroy, it will be result of an AJAX request:
+The `destroy` method will be called also with AJAX:
 ```rb
   def destroy
     if params[:id]
@@ -201,20 +199,20 @@ Something similiar will happen to destroy, it will be result of an AJAX request:
   end
 ```
 
-The controllers for results and indicators will be analogous.
+The controllers for results and indicators are analogous.
 
 ## Views
 
-Since we will organize objectives, results and indicators in a table,
+Since we needed to organize objectives, results and indicators in tables,
 the file `app/views/projects/_form` (used to create and edit projects) is 
-the default generated with the scaffold but adding:
+the default generated with the scaffold but we added:
 1. The identificacion of the project
 ```erb
   <%= hidden_field_tag(:project_id, form.object.id) %>
 ```
 2. A table to edit the objectives of the project
 3. A table to edit the results
-4. A tabla to edit the indicators of the project
+4. A table to edit the indicators of the project
 
 For example the table to edit the objectives is:
 
@@ -252,7 +250,7 @@ Everyting is standard for cocoon except for the options `data-ajax` and
 `data-ajaxdata` the first one is the URL to the method new of the
 objectives controller (that creates and objective with default information 
 and returns its id), the second one is the id of the HTML that holds the
- identification of the project (required by the method new)
+ identification of the project (required by the method new).
 
 The tables for results and identifications are analogus, except that 
 they have an additional column for referencing objective in the case of results 
@@ -303,14 +301,14 @@ and indicators as required. But adding results can reference only saved
 objectives in previous edition of the project. 
 
 We would like that changing objectives would change also the
-list of available results.
+list of available objectives in the results table.
 
 So we concentrate in the following requirements for objectives and analogous 
 for results:
 * Adding an objective should add an option to the selection boxes of
-  results (it already adds in the database).
-* Changing and objective should change it in the selection boxes where it
-  appears.
+  results.
+* Changing the identification of and objective should change it in the selection 
+  boxes where it appears.
 * Removing an objective should be possible only if there are not results
   that depend on it.
 
@@ -332,11 +330,11 @@ The function defined in ```app/assets/javascript/projects.coffee``` is:
     replace_options_select($(r).attr('id'), newops) 
   )
   return
-
 ```
 
 The function ```replace_options_select```just replaces the options of a 
-selection box with the given ones (see it in source code <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator/blob/master/app/assets/javascripts/projects.coffee>).
+selection box with the given ones (see it in source code 
+<https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator/blob/master/app/assets/javascripts/projects.coffee>).
 
 This function `update_objectives` should be called after an objective is 
 removed or when its code changes and also due to the implementation of cocoon 
@@ -378,10 +376,10 @@ The function `try_to_remove_row`:
 3. removes the row from the view
 
 It is a little long, you can see it at:
-<https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator/blob/master/app/assets/javascripts/projects.coffee>.
+<https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator/blob/master/app/assets/javascripts/application.js>.
 
 Finally to update the database when there are changes in references
-(for example in a result changing the reference of the objective),
+(for example in a result changing the reference to a different objective),
 we submit the whole form for updating the database after updating the view:
 
 ```javascript
