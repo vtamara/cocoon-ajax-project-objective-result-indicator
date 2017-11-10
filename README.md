@@ -23,7 +23,9 @@ AJAX to create records and return valid identifications.
 
 You will find the sources of this example application at
 <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator>
-and you can download a small video of this application running from <https://raw.githubusercontent.com/vtamara/cocoon-ajax-project-objective-result-indicator/master/public/example-cocoon-ajax.webm>  (note that you must download and view locally).
+and you can download and see a short video of it running from
+<https://raw.githubusercontent.com/vtamara/cocoon-ajax-project-objective-result-indicator/master/public/example-cocoon-ajax.webm>  
+(note that you must download and view it locally).
 
 In this document we explain how we built it, hoping it will help to understand the
 brief documentation of cocoon and its modification.
@@ -33,17 +35,26 @@ brief documentation of cocoon and its modification.
 In developing the application and changes to cocoon, we tried
 to keep the MVC pattern by updating the database 
 through the controller when there are changes in the view.  
-However we wanted to fire updates in response to some events
-in the view and not only after explicit form submission.
+However we wanted to fire updates/insertions/deletions in the database 
+in response to some events in the view and not only after explicit 
+form submission.
 
 The simplest solution of submitting the whole form and rendering again 
-the whole form is not user friendly (for example it loses the focus and
-could jump to the top of the page).
+the whole view after each update in the view is not user friendly (for 
+example it loses the focus and could jump to the top of the page).
 
-So we will tried other "simple" solution:
-- When new elements are added to the form with cocoon, using AJAX to create 
+So we tried other "simple" solution:
+- When new nodes are added to the form with cocoon, using AJAX to create 
   elements in the database, obtaining a valid identification in the database
-  and use it in the form.
+  and using it in the form.[^1]
+[^1] The official cocoon gem will not do this, since
+  it will assign random identification to new nodes that it creates dynamically.
+  And the records will be created in the database after the form submission.
+  We modified cocoon to have the possibility of behaving this way (it should be
+  possible to achieve the same result without modifyng cocoon, by using
+  the after-insert callback, so once a node is created, create the object in the database
+  with an AJAX request and alter the node created by changing its identification and using
+  it).
 - When deleting elements, since their identifications are real in the
   database, delete them from the database by using AJAX.
 - When certain elements are updated and it is required, update the database 
