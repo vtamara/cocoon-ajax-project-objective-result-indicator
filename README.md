@@ -23,9 +23,8 @@ AJAX to create records and return valid identifications.
 
 You will find the sources of this example application at
 <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator>
-and you can download and see a short video of it running from
-<https://raw.githubusercontent.com/vtamara/cocoon-ajax-project-objective-result-indicator/master/public/example-cocoon-ajax.webm>  
-(note that you must download and view it locally).
+There is a video showing the usage of the application at
+<https://youtu.be/R5lNVBVOrjU>
 
 In this document we explain how we built it, hoping it will help to understand the
 brief documentation of cocoon and its modification.
@@ -396,7 +395,7 @@ The function submit_form can be found at:
 ## 9. Conclusion
 
 * We achieved the desired interactivity in the interface as shown in the video
-<https://raw.githubusercontent.com/vtamara/cocoon-ajax-project-objective-result-indicator/master/public/example-cocoon-ajax.webm>  
+<https://youtu.be/R5lNVBVOrjU>  
 * We think that the modification proposed for cocoon is useful, since we have
   used it in different projects, and we think other developers could benefit from it.
 * We are sending a pull request to the official cocoon repository with the modifications 
