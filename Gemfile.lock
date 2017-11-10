@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/vtamara/cocoon.git
-  revision: 870defa11d9a362f3cdfbb7dbd7a11881ed0ab9c
+  revision: 07a4e8ac65e4a4f200c9965da2153e853d253926
   branch: new_id_with_ajax
   specs:
     cocoon (1.2.11)
