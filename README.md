@@ -23,7 +23,7 @@ AJAX to create records and return valid identifications.
 
 You will find the sources of this example application at
 <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator>
-and a small video of the example at
+and you can download a small video of this application running from <https://raw.githubusercontent.com/vtamara/cocoon-ajax-project-objective-result-indicator/master/public/example-cocoon-ajax.webm>  (note that you must download and view locally).
 
 In this document we explain how we built it, hoping it will help to understand the
 brief documentation of cocoon and its modification.
@@ -148,9 +148,9 @@ Therefore, we also will need a valid identification for a new project so the
   end
 ```
 
-The same applies to objectives, however for this example it only needs to 
-respond to AJAX requests by returning the identification of the
-created objective:
+The same applies to `objectives_controller`, however for this example it only needs 
+the methods `new` and `destroy`.  `new` responds to AJAX requests by 
+returning the identification of the created objective:
 
 ```ruby
     def new
@@ -163,18 +163,14 @@ created objective:
           respond_to do |format|
             format.js { render text: @objective.id.to_s }
             format.json { render json: @objective.id.to_s, status: :created }
-            format.html { render inline: @objective.id.to_s }
+            format.html { render inline: 'Not implemented',
+                        status: :unprocessable_entity }
           end
         else
-          respond_to do |format|
-            format.html { render action: "error" }
-            format.json { render json: @objective.errors, status: :unprocessable_entity }
-          end
+          render inline: 'Not implemented', status: :unprocessable_entity 
         end
       else
-        respond_to do |format|
-          format.html { render inline: 'Missing project identification' }
-        end
+        render inline: 'Missing project identification', status: :unprocessable_entity 
       end
     end
 ```
@@ -209,7 +205,7 @@ the default generated with the scaffold but adding:
 3. A table to edit the results
 4. A tabla to edit the indicators of the project
 
-The table to edit the objectives is:
+For example the table to edit the objectives is:
 
 ```erb
   <div class="div-objectives">
