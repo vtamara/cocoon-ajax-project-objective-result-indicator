@@ -1,6 +1,6 @@
 # Example of modified cocoon using AJAX 
 
-## Context
+## 1. Context
 
 In the context of project management for organizations (see for example {1}) 
 suppose we need an application (see {2}) that allows us to associate many 
@@ -30,7 +30,7 @@ and you can download and see a short video of it running from
 In this document we explain how we built it, hoping it will help to understand the
 brief documentation of cocoon and its modification.
 
-## Rationale
+## 2. Rationale
 
 In developing the application and changes to cocoon, we tried
 to keep the MVC pattern by updating the database 
@@ -59,7 +59,7 @@ So we tried other "simple" solution:
   modified for doing this more automatically.
 - When certain elements are updated and it is required, update the database 
 
-## Starting the application
+## 3. Starting the application
 
 We installed rails (the application referenced uses rails 5.1.4 and was
 developen on OpenBSD/adJ --see configuration in {4}). 
@@ -89,7 +89,7 @@ In `app/assets/javasript/application.rb` we added:
 //= require cocoon
 ```
 
-## Tables, relations and models
+## 4. Tables, relations and models
 
 We created them (along with default controllers and views) with:
 ```sh
@@ -119,7 +119,7 @@ class Project < ApplicationRecord
 end
 ```
 
-## Routes
+## 5. Routes
 
 The first scaffold generated default routes for projects, we added
 routes to create and delete objectives, results and indicators, so 
@@ -135,7 +135,7 @@ Rails.application.routes.draw do
 end
 ```
 
-## Controllers
+## 6. Controllers
 
 A "new way" to create objectives was implemented with the modified cocoon: 
 when the user wants to add a new objective, the application will make an AJAX 
@@ -201,7 +201,7 @@ The `destroy` method will be called also with AJAX:
 
 The controllers for results and indicators are analogous.
 
-## Views
+## 7. Views
 
 Since we needed to organize objectives, results and indicators in tables,
 the file `app/views/projects/_form` (used to create and edit projects) is 
@@ -294,7 +294,7 @@ the new option `"data-existing" => true` that will ensure cocoon
 will delete new records if requested by user.
 
 
-## More dynamic behavior with some javascript
+## 8. More dynamic behavior with some javascript
 
 Up to now the application will allow to remove and add objectives, results
 and indicators as required. But adding results can reference only saved
@@ -393,9 +393,23 @@ The function submit_form can be found at:
 <https://github.com/vtamara/cocoon-ajax-project-objective-result-indicator/blob/master/app/assets/javascripts/projects.coffee>.
 
 
-## References 
+## 9. Conclusion
 
-* {1} Project Planning in UNHCR, a practicl guide on the use of objectives, 
+* We achieved the desired interactivity in the interface as shown in the video
+<https://raw.githubusercontent.com/vtamara/cocoon-ajax-project-objective-result-indicator/master/public/example-cocoon-ajax.webm>  
+* We think that the modification proposed for cocoon is useful, since we have
+  used it in different projects, and we think other developers could benefit from it.
+* We are sending a pull request to the official cocoon repository with the modifications 
+  and referencing this small application trying to make evident the advantages.
+* For other projects, we have maintained a fork of cocoon, more on less updated with 
+  upstream and the proposed modification, but we don't want that. We would prefer that 
+  the modifications would be included in the official cocoon.  If the pull request is not 
+  interesting for the cocoon community, we will explore how to achieve the same result
+  using the official cocoon gem.
+  
+## 10. References 
+
+* {1} Project Planning in UNHCR, a practical guide on the use of objectives, 
       outputs and indicators.  http://www.unhcr.org/3c4595a64.pdf
 * {2} cor1440_sjrlac. Planeación y seguimiento de actividades y proyectos en el 
       SJR LAC.  https://github.com/pasosdeJesus/cor1440_sjrlac 
