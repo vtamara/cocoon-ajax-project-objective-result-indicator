@@ -297,7 +297,7 @@ will delete new records if requested by user.
 
 Up to now the application will allow to remove and add objectives, results
 and indicators as required. But adding results can reference only saved
-objectives in a previous edition of the project. 
+objectives in a previous submissions of the whole project. 
 
 We would like that changing objectives would change also the
 list of available objectives in the results table.
